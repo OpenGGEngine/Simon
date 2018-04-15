@@ -72,6 +72,10 @@ public class Simon {
         ids.put("player", 1);
         ids.put("happy", 2);
         ids.put("", 0);
+        PowerupHolder ho = new PowerupHolder();
+        ho.p = PowerupFactory.getPowerup("onelife");
+        ho.pos = new Point(100, 50);
+        world.objects.add(ho);
         
         //world.objects.add(EnemyFactory.getEnemy("hammerbro", new Point(60,30)));
         WorldLoader coll = new WorldLoader();

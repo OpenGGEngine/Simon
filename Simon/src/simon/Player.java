@@ -5,6 +5,7 @@ import lc.kra.system.keyboard.event.GlobalKeyEvent;
 
 public class Player extends WorldObject {
     int lifestage = 1;
+    int lives=3;
     ArrayList<Powerup> pups = new ArrayList<>();
     Weapon weapon;
     int speed = 2;

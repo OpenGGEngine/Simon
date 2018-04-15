@@ -21,6 +21,10 @@ public class PowerupFactory {
         djump.deactivate = () -> Simon.player.doublejump = false;
         djump.time = 10;
         frames.put("doublejump", djump);
+        PowerupFrame onelife = new PowerupFrame();
+        onelife.activate = () -> Simon.player.lives++;
+        onelife.time = 0;
+        frames.put("onelife", djump);
     }
     
     public static Powerup getPowerup(String name){
