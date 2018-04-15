@@ -34,6 +34,39 @@ public class Simon {
     static boolean[] chars = new boolean[2048];
     
     
+   static char[] spritelist = new char[(16*18)+4]; 
+   static clipboardData clipboardData;
+static void printStack(int index,  int value) {
+	int digit1 = value / 100;
+	int digit2 = (value % 100) / 10;
+	int digit3 = (value % 100) % 10;
+	spritelist[index] = (char)('0' + digit1);
+	spritelist[index+1] = (char)('0' + digit2);
+	spritelist[index+2] = (char)('0' + digit3);
+}
+static void printStack4(int index,  int value) {
+	int digit1 = value / 1000;
+	int digit2 = (value % 1000) / 100;
+	int digit3 = (value % 1000) % 100/10;
+        int digit4 = (value % 1000) % 100%10;
+	spritelist[index] = (char)('0' + digit1);
+	spritelist[index+1] = (char)('0' + digit2);
+	spritelist[index+2] = (char)('0' + digit3);
+        spritelist[index+3] = (char)('0' + digit4);
+}
+static void updateSprite(int index,short x,short y, short width,short height, short scrollx, short scrolly) {
+	int initialindex = (index * 18)+4;
+	printStack(initialindex, x);
+	printStack(initialindex+3, y);
+	printStack(initialindex+6,width);
+	printStack(initialindex+9, height);
+	printStack(initialindex+12, scrollx);
+	printStack(initialindex+15, scrolly);
+
+
+
+}
+    
 
     /**
      * @param args the command line arguments
@@ -54,6 +87,7 @@ public class Simon {
         while (!JFXEmulator.e.ready) {
             Thread.sleep(2);
         }
+                clipboardData = new clipboardData();
         hook = new GlobalKeyboardHook(true);
 
         hook.addKeyListener(new GlobalKeyAdapter() {
@@ -129,19 +163,26 @@ public class Simon {
             out.write((int)(player.pos.x-50));
             out.write((int)0);
             out.write(renderables.size());
+                       
+            printStack4(0,(int)(player.pos.x-50));
             for(Renderable r : renderables){
                 SpriteData s = r.getSprite();
+                
+                updateSprite(ids.getOrDefault(s.sprite, 0),(short)s.pos.x,(short)s.pos.y,(short)32,(short)32,(short)0,(short)0);
                 out.write((int)s.pos.x);
                 out.write((int)s.pos.y);
                 out.write((int)s.rot);
+                
                 out.write(ids.getOrDefault(s.sprite, 0));
 
             }
+
             out.flush();
             byte[] bytes = ((ByteArrayOutputStream)out.getStream()).toByteArray();
             JFXEmulator.e.update(ByteBuffer.wrap(bytes));
+            clipboardData.setData(new String(spritelist));
         }else{
-            IntBuffer b = IntBuffer.allocate(2048);
+          /*  IntBuffer b = IntBuffer.allocate(2048);
             b.put((int)0);
             b.put((int)(player.pos.x-50));
             b.put((int)0);
@@ -153,7 +194,7 @@ public class Simon {
                 b.put((int)s.rot);
                 b.put(ids.getOrDefault(s.sprite, 0));
             }
-            NativeLink.render(b.array());
+            NativeLink.render(b.array());*/
         }
         
     }
