@@ -62,8 +62,9 @@ public class WorldLoader {
                             break;
                         case 50:
                             PowerupHolder holder = new PowerupHolder();
-                            holder.p = PowerupFactory.getPowerup("doublejump");
+                            holder.p = PowerupFactory.getPowerup("bee");
                             holder.pos = new Point(i, zims[0].length-j);
+                            holder.sprite = "beewing";
                             obs.add(holder);
                             break;
                     }

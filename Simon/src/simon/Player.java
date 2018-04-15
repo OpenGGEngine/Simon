@@ -12,6 +12,7 @@ public class Player extends WorldObject {
     int jumpheight = 5;
     float damagemult = 1.0f;
     float vel = 50f;
+    float jumpspeed = 150;
     boolean invincible = false;
     boolean doublejump = false;
     boolean diddob = false;
@@ -56,10 +57,10 @@ public class Player extends WorldObject {
         }
         if(event.getVirtualKeyCode() == GlobalKeyEvent.VK_UP){
             if(grounded){
-                yvel += 150;
+                yvel += jumpspeed;
             }if(!grounded && doublejump && !diddob){
                 yvel = 0;
-                yvel += 150;
+                yvel += jumpspeed;
                 diddob = true;
             }
         }

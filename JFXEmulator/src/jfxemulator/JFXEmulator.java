@@ -73,21 +73,49 @@ public class JFXEmulator extends Application {
         };
         timer.start();
 
-        Tile[][] sprite1, sprite2, sprite3;
+        Tile[][] def, simon, bee, turt, bvr, wing, spag, spagb, bs, dew, dewred, ddos;
         try {
-            sprite1 = Converter.load("C:\\res\\sprite.png");
-            sprite2 = Converter.load("C:\\res\\dab\\char.png");
-            sprite3 = Converter.load("C:\\res\\sprite1.png");
+            def   = Converter.load("C:\\res\\dab\\char.png");
+            simon = Converter.load("C:\\res\\dab\\simon.png");
+            bee   = Converter.load("C:\\res\\dab\\bee.png");
+            turt  = Converter.load("C:\\res\\dab\\turret.png");
+            bvr   = Converter.load("C:\\res\\dab\\bvr.png");
+            wing  = Converter.load("C:\\res\\dab\\wing.png");
+            spag  = Converter.load("C:\\res\\dab\\spaghet.png");
+            spagb = Converter.load("C:\\res\\dab\\spaghetballs.png");
+            bs    = Converter.load("C:\\res\\dab\\balls.png");
+            dew   = Converter.load("C:\\res\\dab\\dew.png");
+            dewred= Converter.load("C:\\res\\dab\\dewred.png");
+            ddos  = Converter.load("C:\\res\\dab\\ddos.png");
+
         } catch (IOException ex) {
-            sprite1 = new Tile[32][16];
-            sprite2 = new Tile[32][16];
-            sprite3 = new Tile[32][16];
+            def   = new Tile[32][16];
+            simon = new Tile[32][16];
+            bee   = new Tile[32][16];
+            turt  = new Tile[32][16];
+            bvr   = new Tile[32][16];
+            wing  = new Tile[32][16];
+            spag  = new Tile[32][16];
+            spagb = new Tile[32][16];
+            bs    = new Tile[32][16];
+            dew   = new Tile[32][16];
+            dewred= new Tile[32][16];
+            ddos  = new Tile[32][16];
 
         }
 
-        spritesheet.put(0, sprite1);
-        spritesheet.put(1, sprite2);
-        spritesheet.put(2, sprite3);
+        spritesheet.put(0, def   );
+        spritesheet.put(1, simon );
+        spritesheet.put(2, bee   );
+        spritesheet.put(3, turt  );
+        spritesheet.put(4, bvr   );
+        spritesheet.put(5, wing  );
+        spritesheet.put(6, spag  );
+        spritesheet.put(7, spagb );
+        spritesheet.put(8, bs    );
+        spritesheet.put(9, dew   );
+        spritesheet.put(10, dewred);
+        spritesheet.put(11, ddos  );
         
         try {
             world.background = new Background(Converter.load("C:\\res\\dab\\grass.png"));

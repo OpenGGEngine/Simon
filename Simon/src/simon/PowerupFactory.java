@@ -21,10 +21,27 @@ public class PowerupFactory {
         djump.deactivate = () -> Simon.player.doublejump = false;
         djump.time = 10;
         frames.put("doublejump", djump);
+        
         PowerupFrame onelife = new PowerupFrame();
         onelife.activate = () -> Simon.player.lives++;
         onelife.time = 0;
-        frames.put("onelife", djump);
+        frames.put("onelife", onelife);
+        
+        PowerupFrame bee = new PowerupFrame();
+        bee.activate = () -> {
+            Simon.player.grav = 20;
+            Simon.player.jumpspeed = 40;
+            Simon.player.sprite = "bee";
+        };
+        
+        bee.deactivate = () -> {
+            Simon.player.grav = 200;
+            Simon.player.jumpspeed = 150;
+            Simon.player.sprite = "player";
+        };
+        
+        bee.time = 8;
+        frames.put("bee", bee);
     }
     
     public static Powerup getPowerup(String name){

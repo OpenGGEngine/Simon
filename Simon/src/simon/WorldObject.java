@@ -32,7 +32,7 @@ public abstract class WorldObject implements Renderable {
         CollisionTuple x = CollisionManager.collide(this);
         grounded = false;
         
-        if (x.w1 != null) {
+        if (x.w1 != null && x.w3 == null) {
             Hitbox newh = this.hitbox.clone();
             pos = tpos;
             recreate();
@@ -57,11 +57,7 @@ public abstract class WorldObject implements Renderable {
             if(hitbox.topright.y < x.w1.botleft.y && newh.topright.y >= x.w1.botleft.y) grounded = true;
         }
         
-        if (x.w2 != null) {
-            pos = tpos;
-        }
-        tpos = new Point(pos);
-        if (x.w3 != null) {
+        if (x.w1 == null && x.w3 != null) {
      
             Hitbox newh = this.hitbox.clone();
             pos = tpos;
@@ -69,30 +65,92 @@ public abstract class WorldObject implements Renderable {
             
             if(hitbox.topright.x < x.w3.botleft.x && newh.topright.x >= x.w3.botleft.x){
                 if(xvel < 0) pos.x += delta * xvel;
-                 System.out.println("yeast");
-            }else if(hitbox.botleft.x >= x.w3.topright.x && newh.botleft.x < x.w3.topright.x){
                 System.out.println("yeast");
-                if(xvel > 0) pos.x += delta * xvel;
-            }else{
+            } else if (hitbox.botleft.x >= x.w3.topright.x && newh.botleft.x < x.w3.topright.x) {
+                System.out.println("yeast");
+                if (xvel > 0) {
+                    pos.x += delta * xvel;
+                }
+            } else {
+                System.out.println("yeast");
                 pos.x += delta * xvel;
             }
 
-            if(hitbox.botleft.y > x.w3.topright.y && newh.botleft.y <= x.w3.topright.y){
-                if(yvel > 0) pos.y += delta * yvel;
-                grounded = true;
-            }else if(hitbox.topright.y <= x.w3.botleft.y && newh.topright.y > x.w3.botleft.y){
+            if (hitbox.botleft.y > x.w3.topright.y && newh.botleft.y <= x.w3.topright.y) {
+                if (yvel > 0) {
+                    pos.y += delta * yvel;
+                }
                 System.out.println("yeast");
-                if(yvel < 0) pos.y += delta * yvel;
-            }else{
+                grounded = true;
+            } else if (hitbox.topright.y <= x.w3.botleft.y && newh.topright.y > x.w3.botleft.y) {
+                System.out.println("yeast");
+                if (yvel < 0) {
+                    pos.y += delta * yvel;
+                }
+            } else {
                 pos.y += delta * yvel;
             }
-            if(hitbox.topright.y < x.w3.botleft.y && newh.topright.y >= x.w3.botleft.y) grounded = true;
+            if (hitbox.topright.y < x.w3.botleft.y && newh.topright.y >= x.w3.botleft.y) {
+                grounded = true;
+            }
+        }
+
+        if (x.w1 != null && x.w3
+                != null) {
+
+            Hitbox newh = this.hitbox.clone();
+            pos = tpos;
+            recreate();
+
+            if (hitbox.topright.x < x.w3.botleft.x && newh.topright.x >= x.w3.botleft.x) {
+                if (xvel < 0) {
+                    pos.x += delta * xvel;
+                }
+                System.out.println("yeast");
+            } else if (hitbox.botleft.x >= x.w3.topright.x && newh.botleft.x < x.w3.topright.x) {
+                System.out.println("yeast");
+                if (xvel > 0) {
+                    pos.x += delta * xvel;
+                }
+            } else {
+                System.out.println("yeast");
+                pos.x += delta * xvel;
+            }
+
+            if ((hitbox.botleft.y > x.w3.topright.y && newh.botleft.y <= x.w3.topright.y) || (hitbox.botleft.y > x.w1.topright.y && newh.botleft.y <= x.w1.topright.y)) {
+                if (yvel > 0) {
+                    pos.y += delta * yvel;
+                }
+                System.out.println("yeast");
+                grounded = true;
+            } else if ((hitbox.topright.y <= x.w3.botleft.y && newh.topright.y > x.w3.botleft.y) || (hitbox.topright.y <= x.w3.botleft.y && newh.topright.y > x.w3.botleft.y)) {
+                System.out.println("yeast");
+                if (yvel < 0) {
+                    pos.y += delta * yvel;
+                }
+            } else {
+                pos.y += delta * yvel;
+            }
+            if (hitbox.topright.y < x.w3.botleft.y && newh.topright.y >= x.w3.botleft.y) {
+                grounded = true;
+            }
         }
         
-        if(gravity) yvel -= grav * delta;
-        if(grounded) yvel = -0.01f;
+        if (x.w2 != null) {
+            pos = tpos;
+        }
+
+        
+
+        if (gravity) {
+            yvel -= grav * delta;
+        }
+        if (grounded) {
+            yvel = -0.01f;
+        }
         recreate();
     }
+
 
     public void recreate(){
         this.hitbox.center = pos;

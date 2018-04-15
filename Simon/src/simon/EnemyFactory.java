@@ -33,7 +33,7 @@ public abstract class EnemyFactory {
             attack.pos = new Point(o.pos).add(new Point(0, 20));
             attack.lifetime = 5;
             attack.damage = 1;
-            attack.sprite = "happy";
+            attack.sprite = "meatball";
             attack.grounded = false;
             attack.yvel = 50;
             attack.xvel = (player.pos.x < o.pos.x) ? -50f : 50f; 
@@ -56,11 +56,11 @@ public abstract class EnemyFactory {
             attack.lifetime = 8;
             attack.gravity = false;
             attack.damage = 1;
-            attack.sprite = "happy";
+            attack.sprite = "meatball";
             attack.grounded = false;
             attack.yvel = 0;
             attack.xvel = (player.pos.x < o.pos.x) ? -50f : 50f; 
-            attack.hitbox = new Hitbox(new Point(4, 0f), new Point(10, 10), attack.pos, attack);
+            attack.hitbox = new Hitbox(new Point(1, 0f), new Point(3, 3), attack.pos, attack);
             attack.hitbox.center = attack.pos;
             attack.hitbox.recreate();
             Simon.world.add(attack);
@@ -72,14 +72,14 @@ public abstract class EnemyFactory {
         EnemyFrame hambro = new EnemyFrame();
         hambro.hbbl = new Point(2,0);
         hambro.hbtr = new Point(10,10);
-        hambro.sprite = "";
+        hambro.sprite = "birdo";
         hambro.behavior = throwHammersAndRunBack;
         frames.put("hammerbro", hambro);
         
         EnemyFrame turret = new EnemyFrame();
         turret.hbbl = new Point(2,0);
         turret.hbtr = new Point(10,10);
-        turret.sprite = "";
+        turret.sprite = "birdo";
         turret.behavior = moveAndFire;
         frames.put("turret", turret);
     }

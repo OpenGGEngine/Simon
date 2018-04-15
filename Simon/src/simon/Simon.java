@@ -83,7 +83,16 @@ public class Simon {
         player = new Player();
         world.objects.add(player);
         ids.put("player", 1);
-        ids.put("happy", 2);
+        ids.put("bee", 2);
+        ids.put("turt", 3);
+        ids.put("beaver", 4);
+        ids.put("beewing", 5);
+        
+        
+        
+        
+        ids.put("meatball", 8);
+        ids.put("birdo", 0);
         ids.put("", 0);
         PowerupHolder ho = new PowerupHolder();
         ho.p = PowerupFactory.getPowerup("onelife");
