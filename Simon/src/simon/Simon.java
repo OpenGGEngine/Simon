@@ -8,9 +8,12 @@ package simon;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jfxemulator.GGOutputStream;
 import jfxemulator.JFXEmulator;
 import lc.kra.system.keyboard.GlobalKeyboardHook;
@@ -36,7 +39,17 @@ public class Simon {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception{
-        new Thread(() -> javafx.application.Application.launch(JFXEmulator.class, args)).start();
+        new Thread(() -> {
+            try {
+                start();
+            } catch (Exception ex) {
+                Logger.getLogger(Simon.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }).start();
+    }
+    
+    public static void start() throws Exception{
+        new Thread(() -> javafx.application.Application.launch(JFXEmulator.class, new String[0])).start();
         Thread.sleep(1000);
         while (!JFXEmulator.e.ready) {
             Thread.sleep(2);
@@ -101,23 +114,38 @@ public class Simon {
     }
     
     public static void updateRender() throws IOException{
-        GGOutputStream out = new GGOutputStream();
-        out.write((int)0);
-        out.write((int)(player.pos.x-50));
-        out.write((int)0);
-        out.write(renderables.size());
-        for(Renderable r : renderables){
-            SpriteData s = r.getSprite();
-            out.write((int)s.pos.x);
-            out.write((int)s.pos.y);
-            out.write((int)s.rot);
-            out.write(ids.getOrDefault(s.sprite, 0));
-            
-        }
-        out.flush();
-        byte[] bytes = ((ByteArrayOutputStream)out.getStream()).toByteArray();
         if(emulator){
+            GGOutputStream out = new GGOutputStream();
+            out.write((int)0);
+            out.write((int)(player.pos.x-50));
+            out.write((int)0);
+            out.write(renderables.size());
+            for(Renderable r : renderables){
+                SpriteData s = r.getSprite();
+                out.write((int)s.pos.x);
+                out.write((int)s.pos.y);
+                out.write((int)s.rot);
+                out.write(ids.getOrDefault(s.sprite, 0));
+
+            }
+            out.flush();
+            byte[] bytes = ((ByteArrayOutputStream)out.getStream()).toByteArray();
             JFXEmulator.e.update(ByteBuffer.wrap(bytes));
+        }else{
+            IntBuffer b = IntBuffer.allocate(2048);
+            b.put((int)0);
+            b.put((int)(player.pos.x-50));
+            b.put((int)0);
+            b.put(renderables.size());
+            for(Renderable r : renderables){
+                SpriteData s = r.getSprite();
+                b.put((int)s.pos.x);
+                b.put((int)s.pos.y);
+                b.put((int)s.rot);
+                b.put(ids.getOrDefault(s.sprite, 0));
+            }
+            NativeLink.render(b.array());
         }
+        
     }
 }

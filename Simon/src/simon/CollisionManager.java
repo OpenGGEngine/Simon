@@ -17,10 +17,17 @@ public class CollisionManager {
     
     public static CollisionTuple collide(WorldObject object){
         CollisionTuple tt = new CollisionTuple();
+        int numa = 0;
         for(Hitbox x : world){
-            if(x.collide(object.hitbox)){
+            if(x.collide(object.hitbox) && numa == 0){
                 tt.w1 =  x;
+                numa+=1;
+            
+            }else if(x.collide(object.hitbox)){
+                tt.w3 =  x;
+                break;
             }
+            
         }
         
         for(WorldObject t : obs){
@@ -36,6 +43,6 @@ public class CollisionManager {
     }
     
     static public class CollisionTuple{
-        Hitbox w1 = null, w2 = null;
+        Hitbox w1 = null, w2 = null,w3 = null;
     }
 }

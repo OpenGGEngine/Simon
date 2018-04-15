@@ -10,9 +10,9 @@ package simon;
  * @author Javier
  */
 public class NativeLink {
-    public static void render(byte[] data){
-        //nativeRender(data);
+    public static void render(int[] data){
+        new NativeLink().nativeRender(data);
     }
     
-    public native void nativeRender(byte[] data);
+    public native void nativeRender(int[] data);
 }

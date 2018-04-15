@@ -39,6 +39,7 @@ public abstract class WorldObject implements Renderable {
             
             if(hitbox.topright.x < x.w1.botleft.x && newh.topright.x >= x.w1.botleft.x){
                 if(xvel < 0) pos.x += delta * xvel;
+                System.out.println("gloug");
             }else if(hitbox.botleft.x >= x.w1.topright.x && newh.botleft.x < x.w1.topright.x){
                 if(xvel > 0) pos.x += delta * xvel;
             }else{
@@ -58,6 +59,34 @@ public abstract class WorldObject implements Renderable {
         
         if (x.w2 != null) {
             pos = tpos;
+        }
+        tpos = new Point(pos);
+        if (x.w3 != null) {
+     
+            Hitbox newh = this.hitbox.clone();
+            pos = tpos;
+            recreate();
+            
+            if(hitbox.topright.x < x.w3.botleft.x && newh.topright.x >= x.w3.botleft.x){
+                if(xvel < 0) pos.x += delta * xvel;
+                 System.out.println("yeast");
+            }else if(hitbox.botleft.x >= x.w3.topright.x && newh.botleft.x < x.w3.topright.x){
+                System.out.println("yeast");
+                if(xvel > 0) pos.x += delta * xvel;
+            }else{
+                pos.x += delta * xvel;
+            }
+
+            if(hitbox.botleft.y > x.w3.topright.y && newh.botleft.y <= x.w3.topright.y){
+                if(yvel > 0) pos.y += delta * yvel;
+                grounded = true;
+            }else if(hitbox.topright.y <= x.w3.botleft.y && newh.topright.y > x.w3.botleft.y){
+                System.out.println("yeast");
+                if(yvel < 0) pos.y += delta * yvel;
+            }else{
+                pos.y += delta * yvel;
+            }
+            if(hitbox.topright.y < x.w3.botleft.y && newh.topright.y >= x.w3.botleft.y) grounded = true;
         }
         
         if(gravity) yvel -= grav * delta;

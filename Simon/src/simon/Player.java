@@ -17,7 +17,7 @@ public class Player extends WorldObject {
     boolean diddob = false;
     
     public Player(){
-        grav = 250;
+        grav = 200;
         this.sprite = "player";
         pos = new Point(40,50);
         hitbox = new Hitbox(new Point(0,0), new Point(16,32), pos, this);
@@ -56,9 +56,10 @@ public class Player extends WorldObject {
         }
         if(event.getVirtualKeyCode() == GlobalKeyEvent.VK_UP){
             if(grounded){
-                yvel += 200;
+                yvel += 150;
             }if(!grounded && doublejump && !diddob){
-                yvel += 200;
+                yvel = 0;
+                yvel += 150;
                 diddob = true;
             }
         }
