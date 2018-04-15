@@ -11,6 +11,7 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -163,12 +164,12 @@ static void updateSprite(int index,short x,short y, short width,short height, sh
             out.write((int)(player.pos.x-50));
             out.write((int)0);
             out.write(renderables.size());
-                       
+            List<SpriteData> spritest = new ArrayList<>();
             printStack4(0,(int)(player.pos.x-50));
             for(Renderable r : renderables){
                 SpriteData s = r.getSprite();
-                
-                updateSprite(ids.getOrDefault(s.sprite, 0),(short)s.pos.x,(short)s.pos.y,(short)32,(short)32,(short)0,(short)0);
+                spritest.add(s);
+                //updateSprite(ids.getOrDefault(s.sprite, 0),(short)s.pos.x,(short)s.pos.y,(short)32,(short)32,(short)0,(short)0);
                 out.write((int)s.pos.x);
                 out.write((int)s.pos.y);
                 out.write((int)s.rot);
@@ -177,6 +178,12 @@ static void updateSprite(int index,short x,short y, short width,short height, sh
 
             }
 
+            spritest.stream()
+                    .sorted((a,b) -> ids.getOrDefault(a.sprite, 0) - ids.getOrDefault(b.sprite, 0))
+                    .filter(a -> a.pos.x < player.pos.x-50+210 && a.pos.x < player.pos.x - 50 - 50)
+                    .forEach(s -> updateSprite(ids.getOrDefault(s.sprite, 0), (short)s.pos.x,(short)s.pos.y,(short)32,(short)32,(short)0,(short)0));
+                    
+            
             out.flush();
             byte[] bytes = ((ByteArrayOutputStream)out.getStream()).toByteArray();
             JFXEmulator.e.update(ByteBuffer.wrap(bytes));
